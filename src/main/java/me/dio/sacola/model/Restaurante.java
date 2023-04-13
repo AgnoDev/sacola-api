@@ -22,11 +22,11 @@ public class Restaurante {
 
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL) // um restaurante tem varios produtos
-                                          // cascade.all > alterações em restaurante, afeta todos os produtos desse restaurante
-    private List<Produto> cardapio;
+    @OneToMany(cascade = CascadeType.ALL) // um restaurante para varios produtos (classe To produto)
+    private List<Produto> cardapio;      // cascade.all > alterações em restaurante, afeta todos os produtos desse restaurante
 
-    @Embedded
+
+    @Embedded // anotação de atributo: recebe os atributos de outra classe em sua tabela
     private Endereco endereco;
 
 }
