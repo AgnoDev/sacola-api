@@ -1,9 +1,18 @@
 package me.dio.sacola.model;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import org.hibernate.annotations.OnDelete;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;import org.hibernate.annotations.OnDelete;
 import java.util.List;
+
+@AllArgsConstructor // cria construtor com todos os atributos
+@NoArgsConstructor // cria construtor vazio exigido pelo Hibernate
+@Data // cria getters, setters, equals e hashcode (talvez alguns que nem sejam utilizados)
+@Entity // converte a classe em tabela no banco de dados
+@Builder // simplifica criação objetos e auxilia na utilização da classe na camada Service
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // ignora erros JSon para atributos Lazy
 
 public class Restaurante {
 
@@ -13,7 +22,8 @@ public class Restaurante {
 
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL) // um restaurante tem varios produtos
+                                          // cascade.all > alterações em restaurante, afeta todos os produtos desse restaurante
     private List<Produto> cardapio;
 
     @Embedded
