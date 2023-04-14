@@ -1,6 +1,7 @@
 package me.dio.sacola.service.implement;
 
 import lombok.RequiredArgsConstructor;
+import me.dio.sacola.enumeration.FormaPagto;
 import me.dio.sacola.model.Item;
 import me.dio.sacola.model.Sacola;
 import me.dio.sacola.repository.SacolaRepository;
@@ -12,21 +13,26 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ImplementsSacolaService implements SacolaService {
     private final SacolaRepository sacolaRepository;
-
     @Override
     public Item incluirItem(ItemDto itemDto) {
         return null;
     }
-
     @Override
     public Sacola verSacola(Long id) {
         return sacolaRepository.findById(id).orElseThrow( // tratamento de Exception
-                ()-> {throw new RuntimeException("Essa sacola não existe!");}
-        );
+                () -> {throw new RuntimeException("Essa sacola não existe!");
+                });
     }
-
     @Override
-    public Sacola fecharSacola(Long id, int formaPagto) {
-        return null;
+    public Sacola fecharSacola(Long id, int nFormaPagto) {
+        Sacola sacola = verSacola(id);
+        if (sacola.getItens().isEmpty()) {
+            throw new RuntimeException("Inclua itens na sacola!");
+        }
+        FormaPagto formaPagto =
+                nFormaPagto == 0 ? FormaPagto.DINHEIRO : FormaPagto.MAQUINETA;
+        sacola.setFormaPagto(formaPagto);
+        sacola.setFechada(true);
+        return sacolaRepository.save(sacola);
     }
 }
