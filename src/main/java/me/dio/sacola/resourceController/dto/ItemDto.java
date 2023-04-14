@@ -1,4 +1,4 @@
-package me.dio.sacola.dto;
+package me.dio.sacola.resourceController.dto;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
