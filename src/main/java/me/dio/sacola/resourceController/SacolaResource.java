@@ -23,7 +23,7 @@ public class SacolaResource {
         return sacolaService.verSacola(id);
     }
 
-    @PatchMapping("(fechar/{idSacola}")// para alterações parciais no BD
+    @PatchMapping("/fechar/{idSacola}")// para alterações parciais no BD
     public Sacola fecharSacola(@PathVariable("idSacola") Long idSacola,
                                @RequestParam("formaPagto") int formaPagto) {
         return sacolaService.fecharSacola(idSacola, formaPagto);
