@@ -5,7 +5,6 @@ import me.dio.sacola.model.Item;
 import me.dio.sacola.model.Sacola;
 import org.springframework.stereotype.Service;
 
-@Service
 public interface SacolaService {
 
     Item incluirItem(ItemDto itemDto);
