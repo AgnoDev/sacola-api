@@ -12,6 +12,7 @@ import me.dio.sacola.resourceController.dto.ItemDto;
 import me.dio.sacola.service.SacolaService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -51,8 +52,21 @@ public class ImplementsSacolaService implements SacolaService {
                                 "Favor abrir nova sacola.");
             }
         }
+
+        List<Double> valorDosItens = new ArrayList<>();
+        for (Item itemDaSacola : itensDaSacola) {
+            double valorTotalItens = itemDaSacola.getProduto().getValorUnitario() * itemDaSacola.getQuantidade();
+            valorDosItens.add(valorTotalItens);
+        }
+
+        double valorTotalSacola = valorDosItens
+                .stream()
+                .mapToDouble(valorTotalDeCadaItem -> valorTotalDeCadaItem)
+                .sum();
+
+        sacola.setValorTotal(valorTotalSacola);
         sacolaRepository.save(sacola);
-        return itemRepository.save(criaItem);
+        return criaItem;
     }
 
     @Override
